@@ -103,13 +103,21 @@ async function fetchAllPosts() {
     throw new Error('.env に WP_URL / WP_USER / WP_APP_PASSWORD が設定されていません');
   }
   const auth = Buffer.from(`${wpUser}:${wpPass}`).toString('base64');
+  const headers = {
+    Authorization: `Basic ${auth}`,
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Accept': 'application/json',
+  };
   const allPosts = [];
   for (let page = 1; page <= 50; page++) {
     const url = `${wpUrl}/wp-json/wp/v2/posts?per_page=100&page=${page}` +
       `&status=publish,draft,pending,future,private&_embed=wp:term`;
-    const res = await fetch(url, { headers: { Authorization: `Basic ${auth}` } });
+    const res = await fetch(url, { headers });
     if (res.status === 400 || res.status === 404) break;
-    if (!res.ok) throw new Error(`WP API error ${res.status}`);
+    if (!res.ok) {
+      const body = await res.text();
+      throw new Error(`WP API error ${res.status}: ${body.slice(0, 300)}`);
+    }
     const posts = await res.json();
     if (!posts.length) break;
     allPosts.push(...posts);
