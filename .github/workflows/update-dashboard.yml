@@ -1,14 +1,12 @@
 name: Update Dashboard
 
+# Note: XSERVER WAF が GitHub Actions の IP をブロックするため、
+# 自動同期は Mac の launchd でローカル実行する運用にしています。
+# WAF が解除されたら下の schedule をアンコメントしてください。
 on:
-  schedule:
-    # 毎朝8時 (JST) = 23時 (UTC, 前日)
-    - cron: '0 23 * * *'
-  workflow_dispatch: {}  # 手動実行も可能
-  push:
-    paths:
-      - 'scripts/generate-dashboard.js'
-      - '.github/workflows/update-dashboard.yml'
+  workflow_dispatch: {}  # 手動実行のみ
+  # schedule:
+  #   - cron: '0 23 * * *'  # 毎朝8時 (JST)
 
 permissions:
   contents: write
