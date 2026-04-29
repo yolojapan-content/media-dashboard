@@ -537,6 +537,8 @@ function renderHtml(groups, langs, stats) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>YOLO MEDIA 記事管理ダッシュボード</title>
+<link rel="icon" type="image/png" href="assets/favicon.ico">
+<link rel="shortcut icon" type="image/png" href="assets/favicon.ico">
 <style>
   * { box-sizing: border-box; }
   body {
@@ -546,8 +548,11 @@ function renderHtml(groups, langs, stats) {
     line-height: 1.5;
   }
   .container { max-width: 1600px; margin: 0 auto; }
-  h1 { font-size: 24px; margin: 0 0 4px; }
-  .subtitle { color: #5f6368; font-size: 13px; margin: 0 0 24px; }
+  .site-header { display: flex; align-items: center; gap: 16px; margin: 0 0 24px; padding-bottom: 16px; border-bottom: 1px solid #e0e0e0; }
+  .site-logo { height: 36px; width: auto; flex-shrink: 0; }
+  .site-header-text { flex: 1; min-width: 0; }
+  h1 { font-size: 22px; margin: 0 0 2px; color: #202124; font-weight: 600; }
+  .subtitle { color: #5f6368; font-size: 12px; margin: 0; }
 
   /* ===== Tabs ===== */
   .tabs { display: flex; border-bottom: 2px solid #d0d7de; margin: 24px 0 0; }
@@ -792,8 +797,13 @@ function renderHtml(groups, langs, stats) {
 </head>
 <body>
 <div class="container">
-  <h1>YOLO MEDIA 記事管理ダッシュボード</h1>
-  <p class="subtitle">WordPress と自動同期 / ${generatedAt} 時点</p>
+  <div class="site-header">
+    <img src="assets/logo.svg" alt="YOLO MEDIA" class="site-logo">
+    <div class="site-header-text">
+      <h1>記事管理ダッシュボード</h1>
+      <p class="subtitle">WordPress と自動同期 / ${generatedAt} 時点</p>
+    </div>
+  </div>
 
   <div class="tabs">
     <div class="tab active" data-panel="dash">ダッシュボード</div>
